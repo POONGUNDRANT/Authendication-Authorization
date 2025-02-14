@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "b7f30c1b-07e4-45a2-a91f-b944a4d2bffc",
+		"name": "user_auth",
+		"description": "StartFragment**User Authentication and Authorization with Bearer Token**EndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39093708",
+		"_collection_link": "https://test88-3808.postman.co/workspace/037cbc98-14d9-4383-b711-52031612167c/collection/39093708-b7f30c1b-07e4-45a2-a91f-b944a4d2bffc?action=share&source=collection_link&creator=39093708"
+	},
+	"item": [
+		{
+			"name": "View all users",
+			"item": [
+				{
+					"name": "http://localhost:3000/users/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "StartFragment\n\n### **View All Users**\n\n- **Endpoint:** `/users/all`\n    \n- **Method:** `GET`\n    \n- **Description:** Retrieves a list of all registered users in the system. Requires authentication.\n    \n\n#### Headers\n\n- `Authorization` (string): Bearer token obtained from the login endpoint.\n    \n\n#### Success Response\n\n- **Description:** Returns an array of user objects containing basic user information for each registered user.\n    \n\n#### Response Parameters\n\n- Each user object in the array includes:\n    \n    - `_id` (string): Unique identifier for the user.\n        \n    - `userName` (string): Name of the user.\n        \n    - `email` (string): Email address of the user.\n        \n\n#### Error Handling\n\n- **401 Unauthorized**: If the token is missing or invalid, a message indicating unauthorized access is returned.\n    \n\n#### Notes\n\n- This endpoint provides an overview of all users. For viewing specific user details, use the `/user` endpoint with a valid token.\n    \n\nEndFragment"
+		},
+		{
+			"name": "Using token to view logged in user",
+			"item": [
+				{
+					"name": "http://localhost:3000/users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWY5MzI5NzAxNDUwNDZkYjkxYTBmMSIsInVzZXJuYW1lIjoiS2FydGhpIiwiaWF0IjoxNzMwMTIyNjA1LCJleHAiOjE3MzAxMjYyMDV9.QVfpEic1wBEWu0I-pXAa4gBdwfrA5lh5-jJNf2VDkis",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "StartFragment\n\n### **View Specific User**\n\n- **Endpoint:** `/users`\n    \n- **Method:** `GET`\n    \n- **Description:** Retrieves the details of the authenticated user based on the JWT token provided in the request headers.\n    \n\n#### Headers\n\n- `Authorization` (string): Bearer token obtained from the login endpoint.\n    \n\n#### Success Response\n\n- **Description:** Returns an object containing the authenticated user's information.\n    \n\n#### Response Parameters\n\n- `_id` (string): Unique identifier for the user.\n    \n- `userName` (string): The name of the user.\n    \n- `email` (string): The email address of the user.\n    \n\n#### Error Handling\n\n- **401 Unauthorized**: If the token is missing, expired, or invalid, a message indicating unauthorized access is returned.\n    \n- **404 Not Found**: If the user associated with the token is not found.\n    \n\n#### Notes\n\n- This endpoint is used for retrieving data of the specific user associated with the provided JWT token. The token should be included in the `Authorization` header as a Bearer token.\n    \n\nEndFragment"
+		},
+		{
+			"name": "Login to generate token",
+			"item": [
+				{
+					"name": "http://localhost:3000/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"karthi@gmail.com\",\r\n    \"password\": \"karthi123\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**Login User**\n\n- **Endpoint:** `/login`\n    \n- **Method:** `POST`\n    \n- **Description:** Authenticates a user with their email and password, returning a JWT token if the login is successful.\n    \n\n#### Request Parameters\n\n- `email` (string): The user’s registered email address.\n    \n- `password` (string): The user’s password.\n    \n\n#### Success Response\n\n- **Description:** Returns a message confirming successful login along with a JWT token to be used for authorized requests.\n    \n- jsonCopy code{ \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWY5MzI5NzAxNDUwNDZkYjkxYTBmMSIsInVzZXJuYW1lIjoiS2FydGhpIiwiaWF0IjoxNzMwMTM2ODA5LCJleHAiOjE3MzAxNDA0MDl9._wSdKnmK2bTon4K-e3OP34SLtFLmyVXZQ6b9StH2fn0\", \"message\": \"User logged in successfully\"}\n    \n\n#### Response Parameters\n\n- `token` (string): JWT token to be used for authentication in subsequent requests.\n    \n- `message` (string): Success message indicating the user is logged in.\n    \n\n#### Error Handling\n\n- **401 Unauthorized**: If the email or password is incorrect, a message indicating login failure is returned.\n    \n- **400 Bad Request**: If required fields are missing.\n    \n\n#### Notes\n\n- The JWT token should be included in the `Authorization` header as a Bearer token for accessing protected endpoints."
+		},
+		{
+			"name": "Register user",
+			"item": [
+				{
+					"name": "http://localhost:3000/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\" : \"Karthi\",\r\n    \"email\" : \"karthi@gmail.com\",\r\n    \"password\" : \"karthi123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### **Register User**\n\n- **Endpoint:** `/register`\n    \n- **Method:** `POST`\n    \n- **Description:** Registers a new user and stores their data securely. Passwords are hashed for security.\n    \n\n#### Request Parameters\n\n- `userName` (string): The user's name.\n    \n- `email` (string): The user's email address.\n    \n- `password` (string): The user's password.\n    \n\n#### Success Response\n\n- **Description:** Returns a message indicating successful registration along with user data, excluding sensitive details.\n    \n- jsonCopy code{ \"message\": \"User registered successfully\", \"success\": true, \"data\": { \"userName\": \"Karthi\", \"email\": \"[karthi@gmail.com](https://mailto:karthik@gmail.com)\", \"password\": \"$2a$10$4FrIV7MVaY84dJZ2m6N1GeHE4obTVQgC1wPDwtoQGp5Kyl9qtIgju\", \"_id\": \"671fc9b8aceb5d11f3164ebd\", \"__v\": 0 }}\n    \n\n#### Response Parameters\n\n- `message` (string): Success message.\n    \n- `success` (boolean): Indicates if the operation was successful.\n    \n- `data` (object): Contains the user data:\n    \n    - `userName` (string): The user's name.\n        \n    - `email` (string): The user's email.\n        \n    - `password` (string): Hashed password for security.\n        \n    - `_id` (string): Unique identifier for the user.\n        \n    - `__v` (integer): Document version.\n        \n\n#### Error Handling\n\n- Appropriate error messages are returned if registration fails due to validation errors or server issues."
+		},
+		{
+			"name": "Home page",
+			"item": [
+				{
+					"name": "http://localhost:3000",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000"
+						},
+						"description": "# HTTP GET Request to [http://localhost:3000](http://localhost:3000)\n\nThis endpoint sends an HTTP GET request to the specified URL.\n\n## Request Body\n\nThis request does not include a request body.\n\n## Response\n\nThe response will contain the data requested from the server. The structure and content of the response will depend on the specific implementation of the server and the endpoint being accessed.\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    // Add properties based on the actual response data\n  }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
