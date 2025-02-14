@@ -32,6 +32,6 @@ APIServer.use("/register", registerController);
 //Start and listen the server
 
 APIServer.listen(process.env.PORT, process.env.HOSTNAME, () => {
-    console.log("Server is running on port 10000");
+    console.log("Server is running on port 3000");
     console.log(`http://${process.env.HOSTNAME}:${process.env.PORT}`);
 });
